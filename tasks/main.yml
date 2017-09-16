@@ -8,8 +8,31 @@
 - name: Install Docker.
   package: name={{ docker_package }} state={{ docker_package_state }}
 
-- name: Ensure Docker is started and enabled at boot.
+- name: Ensure Docker service configuration folder is present.
+  file:
+    path: /etc/systemd/system/docker.service.d
+    state: directory
+    mode: 0640
+
+- name: Ensure Docker is stopped before configuration.
   service:
+    name: docker
+    state: stopped
+
+- name: Ensure Docker configuration is present.
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: root
+    group: docker
+    mode: 0640
+  with_items:
+    - { src: 'daemon.json.j2', dest: '/etc/docker/daemon.json' }
+    - { src: 'docker.conf', dest: '/etc/systemd/system/docker.service.d/docker.conf' }
+
+- name: Ensure Docker is started and enabled at boot.
+  systemd:
+    daemon_reload: yes
     name: docker
     state: started
     enabled: yes

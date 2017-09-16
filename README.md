@@ -25,6 +25,11 @@ The `docker_edition` should be either `ce` (Community Edition) or `ee` (Enterpri
 
 Docker Compose installation options.
 
+    docker_daemon_options:
+        hosts:
+            - "tcp://0.0.0.0:2375"
+Docker daemon options.
+
     docker_apt_release_channel: stable
     docker_apt_repository: "deb https://download.docker.com/linux/{{ ansible_distribution|lower }} {{ ansible_distribution_release }} {{ docker_apt_release_channel }}"
 
