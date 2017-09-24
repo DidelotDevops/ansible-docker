@@ -25,6 +25,12 @@ The `docker_edition` should be either `ce` (Community Edition) or `ee` (Enterpri
 
 Docker Compose installation options.
 
+    docker_users:
+	- foo
+	- bar
+
+The `docker_users` should be a list of existing users.
+
     docker_daemon_options:
         hosts:
           - "unix:///var/run/docker.sock"

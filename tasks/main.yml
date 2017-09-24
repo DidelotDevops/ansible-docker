@@ -39,3 +39,11 @@
 
 - include_tasks: docker-compose.yml
   when: docker_install_compose
+
+- name: Add users to docker group.
+  user:
+    name: "{{ item }}"
+    groups: docker
+    append: yes
+  with_items: "{{ docker_users }}"
+
