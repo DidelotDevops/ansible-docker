@@ -27,8 +27,15 @@ Docker Compose installation options.
 
     docker_daemon_options:
         hosts:
-            - "tcp://0.0.0.0:2375"
+          - "unix:///var/run/docker.sock"
+          - "tcp://{{ ansible_host }}:2376"
+        tlsverify: true
+        tlscacert: "{{ tls_server_cert_path }}/ca.pem"
+        tlscert: "{{ tls_server_cert_path }}/server-cert.pem"
+        tlskey: "{{ tls_server_cert_path }}/server-key.pem"
 Docker daemon options.
+
+(Note that certificates has to be created before launching the role and you have to create the tls_server_cert_path).
 
     docker_apt_release_channel: stable
     docker_apt_repository: "deb https://download.docker.com/linux/{{ ansible_distribution|lower }} {{ ansible_distribution_release }} {{ docker_apt_release_channel }}"
