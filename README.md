@@ -1,9 +1,7 @@
 # Ansible Role: Docker
 
-[![Build Status](https://travis-ci.org/geerlingguy/ansible-role-docker.svg?branch=master)](https://travis-ci.org/geerlingguy/ansible-role-docker)
-
 An Ansible Role that installs [Docker](https://www.docker.com) on Linux.
-
+This role is a fork of geerlingguy.docker with more features (docker users, docker deamon conf)
 ## Requirements
 
 None.
@@ -25,12 +23,13 @@ The `docker_edition` should be either `ce` (Community Edition) or `ee` (Enterpri
 
 Docker Compose installation options.
 
-    docker_users:
-	- foo
-	- bar
+    docker_users: []
 
 The `docker_users` should be a list of existing users.
 
+    docker_reset_ssh: false
+
+The options to reset ssh at the end of the role (can be used if `ansible_user` is in `docker_users`)
     docker_daemon_options:
         hosts:
           - "unix:///var/run/docker.sock"
@@ -67,7 +66,7 @@ Many users of this role wish to also use Ansible to then _build_ Docker images a
 
   roles:
     - geerlingguy.pip
-    - geerlingguy.docker
+    - docker
 ```
 
 ## Dependencies
@@ -79,7 +78,7 @@ None.
 ```yaml
 - hosts: all
   roles:
-    - geerlingguy.docker
+    - docker
 ```
 
 ## License
@@ -89,3 +88,4 @@ MIT / BSD
 ## Author Information
 
 This role was created in 2017 by [Jeff Geerling](https://www.jeffgeerling.com/), author of [Ansible for DevOps](https://www.ansiblefordevops.com/).
+And edited by Kevin Didelot in 2018

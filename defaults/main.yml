@@ -23,3 +23,4 @@ docker_yum_repo_enable_test: 0
 
 # User to add in docker group
 docker_users: []
+docker_reset_ssh: false
