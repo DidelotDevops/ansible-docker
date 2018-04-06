@@ -42,6 +42,13 @@ Docker daemon options.
 
 (Note that certificates has to be created before launching the role and you have to create the tls_server_cert_path).
 
+    docker_use_proxy: false
+    docker_http_proxy: ""
+    docker_https_proxy: ""
+
+Set `docker_use_proxy` to `true` and set `docker_http_proxy` and `docker_https_proxy` in order to configure docker to use proxy.
+
+
     docker_apt_release_channel: stable
     docker_apt_repository: "deb https://download.docker.com/linux/{{ ansible_distribution|lower }} {{ ansible_distribution_release }} {{ docker_apt_release_channel }}"
 
