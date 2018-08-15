@@ -19,6 +19,14 @@
     name: docker
     state: stopped
 
+- name: Make sur docker conf director exists.
+  file:
+    path: /etc/docker
+    state: directory
+    mode: 0600
+    owner: root
+    group: root
+
 - name: Ensure Docker configuration is present.
   template:
     src: "{{ item.src }}"
