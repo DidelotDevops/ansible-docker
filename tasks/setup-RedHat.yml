@@ -34,3 +34,16 @@
     section: 'docker-{{ docker_edition }}-test'
     option: enabled
     value: '{{ docker_yum_repo_enable_test }}'
+
+- debug:
+    msg: "{{ docker_packages | json_query('name') | join(' ') }}"
+  tags: toto
+
+# Yum module doesn't permit to add extra options so command ^^
+- name: Install Docker.
+  command: |
+    yum install -y \
+    {{ docker_yum_install_options }} \
+    {{ docker_packages | json_query('name') | join(' ') }}
+  args:
+    warn: no

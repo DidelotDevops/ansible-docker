@@ -1,8 +1,9 @@
 ---
 # Edition can be one of: 'ce' (Community Edition) or 'ee' (Enterprise Edition).
 docker_edition: 'ce'
-docker_package: "docker-{{ docker_edition }}"
-docker_package_state: present
+docker_packages:
+  - name: "docker-{{ docker_edition }}"
+    state: present
 
 # Docker Compose options.
 docker_install_compose: true
@@ -25,6 +26,7 @@ docker_apt_repository: "deb https://download.docker.com/linux/{{ ansible_distrib
 docker_yum_repo_url: https://download.docker.com/linux/centos/docker-{{ docker_edition }}.repo
 docker_yum_repo_enable_edge: 0
 docker_yum_repo_enable_test: 0
+docker_yum_install_options: "" # --setopt=obsoletes=0 For docker ce 17.03
 
 # User to add in docker group
 docker_users: []

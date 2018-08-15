@@ -12,8 +12,9 @@ Available variables are listed below, along with default values (see `defaults/m
 
     # Edition can be one of: 'ce' (Community Edition) or 'ee' (Enterprise Edition).
     docker_edition: 'ce'
-    docker_package: "docker-{{ docker_edition }}"
-    docker_package_state: present
+    docker_packages:
+      - name: "docker-{{ docker_edition }}"
+        state: present
 
 The `docker_edition` should be either `ce` (Community Edition) or `ee` (Enterprise Edition). You can also specify a specific version of Docker to install using a format like `docker-{{ docker_edition }}-<VERSION>`. And you can control whether the package is installed, uninstalled, or at the latest version by setting `docker_package_state` to `present`, `absent`, or `latest`, respectively.
 
@@ -57,6 +58,7 @@ Set `docker_use_proxy` to `true` and set `docker_http_proxy` and `docker_https_p
     docker_yum_repo_url: https://download.docker.com/linux/centos/docker-{{ docker_edition }}.repo
     docker_yum_repo_enable_edge: 0
     docker_yum_repo_enable_test: 0
+    docker_yum_install_options: "" # --setopt=obsoletes=0 For docker ce 17.03
 
 (Used only for RedHat/CentOS.) You can enable the Edge or Test repo by setting the respective vars to `1`.
 

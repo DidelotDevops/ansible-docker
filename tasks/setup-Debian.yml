@@ -38,3 +38,7 @@
     repo: "{{ docker_apt_repository }}"
     state: present
     update_cache: yes
+
+- name: Install Docker.
+  apt: name={{ item.name }} state={{ item.state }}
+  with_items: "{{ docker_packages }}"
