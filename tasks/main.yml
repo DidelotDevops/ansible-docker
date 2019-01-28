@@ -38,7 +38,7 @@
   with_items:
     - { src: 'daemon.json.j2', dest: '/etc/docker/daemon.json', when: true }
     - { src: 'docker.conf', dest: '/etc/systemd/system/docker.service.d/docker.conf', when: true }
-    - { src: 'http-proxy.conf', when: "{{ docker_use_proxy }}" }
+    - { src: 'http-proxy.conf', dest: '/etc/systemd/system/docker.service.d/http-proxy.conf', when: "{{ docker_use_proxy }}" }
   when: item.when
 
 - name: Ensure Docker is started and enabled at boot.
