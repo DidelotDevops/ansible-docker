@@ -45,7 +45,6 @@
   systemd:
     daemon_reload: yes
     name: docker
-    state: started
     enabled: yes
     state: "{{ docker_service_state }}"
     enabled: "{{ docker_service_enabled }}"
