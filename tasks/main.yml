@@ -11,6 +11,10 @@
     state: directory
     mode: 0640
 
+# TODO: Remove this shim once 18.09.1 or later is released.
+- import_tasks: docker-1809-shim.yml
+  when: ansible_service_mgr == 'systemd'
+
 - name: Ensure Docker is stopped before configuration.
   service:
     name: docker
@@ -43,16 +47,17 @@
     name: docker
     state: started
     enabled: yes
+    state: "{{ docker_service_state }}"
+    enabled: "{{ docker_service_enabled }}"
+
+- name: Ensure handlers are notified now to avoid firewall conflicts.
+  meta: flush_handlers
 
 - include_tasks: docker-compose.yml
   when: docker_install_compose
 
-- name: Add users to docker group.
-  user:
-    name: "{{ item }}"
-    groups: docker
-    append: yes
-  with_items: "{{ docker_users }}"
+- include_tasks: docker-users.yml
+  when: docker_users
 
 #- name: Reset ssh connection to allow user changes to affect 'current login user'.
 #  meta: reset_connection
@@ -68,3 +73,4 @@
   delegate_to: localhost
   changed_when: false
   when: docker_reset_ssh == true
+

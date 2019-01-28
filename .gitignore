@@ -1,3 +1,4 @@
 .idea
 *.retry
-tests/test.sh
+*/__pycache__
+*.pyc
