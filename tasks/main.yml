@@ -15,11 +15,6 @@
 - import_tasks: docker-1809-shim.yml
   when: ansible_service_mgr == 'systemd'
 
-- name: Ensure Docker is stopped before configuration.
-  service:
-    name: docker
-    state: stopped
-
 - name: Make sur docker conf director exists.
   file:
     path: /etc/docker
@@ -40,6 +35,7 @@
     - { src: 'docker.conf', dest: '/etc/systemd/system/docker.service.d/docker.conf', when: true }
     - { src: 'http-proxy.conf', dest: '/etc/systemd/system/docker.service.d/http-proxy.conf', when: "{{ docker_use_proxy }}" }
   when: item.when
+  notify: restart docker
 
 - name: Ensure Docker is started and enabled at boot.
   systemd:
